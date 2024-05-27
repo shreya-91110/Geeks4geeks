@@ -1,0 +1,20 @@
+
+class Solution {
+  public:
+    int solveMem(int prev, int curr, vector<int>& v) {
+        if(curr >= v.size()) return 0;
+        
+        int take = INT_MIN, not_take = INT_MIN;
+        
+        if(prev == -1 || abs(v[curr] - v[prev]) == 1) {
+            take = 1 + solveMem(curr, curr + 1, v);
+        }
+        not_take = 0 + solveMem(prev, curr + 1, v);
+        
+        return max(take, not_take);
+    }
+    int longestSubseq(int n, vector<int> &a) {
+        // code here
+        return solveMem(-1, 0, a);
+    }
+};
