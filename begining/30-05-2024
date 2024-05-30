@@ -1,0 +1,17 @@
+class Solution {
+  public:
+    int mod = 1e9 + 7;
+    int Rec(string &s, string &t, int i, int j, vector<vector<int>> &dp)
+    {
+        if(j>=t.length())   return 1;
+        if(i>=s.length())   return 0;
+        if(dp[i][j]!=-1)   return dp[i][j];
+        int pick = 0;
+        if(s[i]==t[j])  pick = Rec(s, t, i+1, j+1, dp);
+        return dp[i][j] = ((pick)%mod + Rec(s, t, i+1, j, dp)%mod)%mod;
+    }
+    int countWays(string s1, string s2){
+        vector<vector<int>> dp(s1.size(),  vector<int>(s2.size(), -1));
+        return (Rec(s1, s2, 0, 0, dp))%mod;
+    }
+};
