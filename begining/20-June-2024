@@ -1,0 +1,38 @@
+class Solution {
+  public:
+    // Basically Pick's Theorem use kiya gaya hai.
+    // Area = Internal - (Boundary/2) +1
+    
+    // Calculating gcd
+    long long int gcd(long long int x,long long int y){
+        if(x==0)
+            return y;
+        if(y==0)
+            return x;
+        if(x%y==0)
+            return y;
+        if(x>y)
+            return gcd(x-y,y);
+        return gcd(x,y-x);
+    }
+  
+    long long int InternalCount(long long int p[], long long int q[],
+                                long long int r[]) {
+        long long int x1 = p[0],y1 = p[1];
+        long long int x2 = q[0],y2 = q[1];
+        long long int x3 = r[0],y3 = r[1];
+        
+        // Area calculation
+        long long int area = abs(x1*(y2-y3) + x2*(y3-y1) +x3*(y1-y2))/2;
+        
+        // Calculating all boundary points.
+        long long int a = gcd(abs(x1-x2),abs(y1-y2));
+        long long int b = gcd(abs(x2-x3),abs(y2-y3));
+        long long int c = gcd(abs(x1-x3),abs(y1-y3));
+        long long int boundary = a+b+c;
+        
+        // Calculating Integral points.
+        long long int internal = area-boundary/2 + 1;
+        return internal;
+    }
+};
