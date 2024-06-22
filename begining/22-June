@@ -1,0 +1,17 @@
+class Solution {
+  public:
+    long long ExtractNumber(string sentence) {
+
+        stringstream ss(sentence);
+        string word;
+        long long mx = -1;
+        while(ss >> word){
+            if(isdigit(word[0])){
+                bool flag = true;
+                for(char i : word) if(i-'0' == 9) flag = false;
+                if(flag) mx = max(mx,stoll(word));
+            }
+        }
+        return mx;
+    }
+};
