@@ -1,0 +1,39 @@
+class Solution {
+  public:
+  bool isPalindrome(string s){
+        string str=s;
+        reverse(str.begin(),str.end());
+        return str==s;
+    }
+    
+    string pattern(vector<vector<int>> &arr) {
+        int n= arr.size();
+        
+        // for rows
+        for (int i=0;i<n;i++){
+            string s1 ="";
+                for(int j=0;j<n;j++){
+                    s1 += to_string(arr[i][j]);
+                }
+                
+                if(isPalindrome(s1)){
+                    return to_string(i)+" R";
+                }
+        }
+        
+        
+        //for columns
+        for (int i=0;i<n;i++){
+            string s2 ="";
+                for(int j=0;j<n;j++){
+                    s2 += to_string(arr[j][i]);
+                }
+                
+                if(isPalindrome(s2)){
+                    return to_string(i)+" C";
+                }
+        }
+        
+        return "-1" ;
+    }
+};
