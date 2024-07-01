@@ -1,0 +1,27 @@
+class Solution {
+  public:
+    void util(Node *head, TreeNode *&root, int &flag)
+{
+    if(head == NULL)
+    {
+        return;
+    }
+    TreeNode *new_node = new TreeNode(head->data);
+    root = new_node;
+    if(!flag)
+    {
+        flag = 1;
+        util(head->next, root->left, flag);
+    }
+    else{
+        flag = 0;
+        util(head->next, root->right, flag);
+    }
+}
+void convert(Node *head, TreeNode *&root) {
+    int flag = 0;
+    util(head, root, flag);
+}
+   
+   
+};
