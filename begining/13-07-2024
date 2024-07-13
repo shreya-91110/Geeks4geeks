@@ -1,0 +1,54 @@
+class Solution {
+  public:
+    vector<int> shortestPath(int n, int m, vector<vector<int>>& edges) {
+        // Code here
+        vector<vector<pair<int, int>>> adj(n + 1);
+        for (auto& edge : edges) {
+            int u = edge[0], v = edge[1], w = edge[2];
+            adj[u].emplace_back(v, w);
+            adj[v].emplace_back(u, w);
+        }
+
+        // Dijkstra's algorithm
+        priority_queue<pair<int, int>, vector<pair<int, int>>, greater<pair<int, int>>> pq;
+        vector<int> dist(n + 1, INT_MAX);
+        vector<int> parent(n + 1, -1);
+
+        dist[1] = 0;
+        pq.emplace(0, 1); // (distance, vertex)
+
+        while (!pq.empty()) {
+            int d = pq.top().first;
+            int u = pq.top().second;
+            pq.pop();
+
+            if (d > dist[u]) continue;
+
+            for (auto& neighbor : adj[u]) {
+                int v = neighbor.first;
+                int weight = neighbor.second;
+
+                if (dist[u] + weight < dist[v]) {
+                    dist[v] = dist[u] + weight;
+                    pq.emplace(dist[v], v);
+                    parent[v] = u;
+                }
+            }
+        }
+
+        // If there's no path to vertex n
+        if (dist[n] == INT_MAX) return {-1};
+
+        // Retrieve the path
+        vector<int> path;
+        for (int v = n; v != -1; v = parent[v]) {
+            path.push_back(v);
+        }
+        reverse(path.begin(), path.end());
+
+        // The first element is the total weight of the path
+        path.insert(path.begin(), dist[n]);
+        return path;
+    }
+    
+};
