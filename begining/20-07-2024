@@ -1,0 +1,28 @@
+class Solution {
+  public:
+    Node *RemoveHalfNodes(Node *root) {
+    if (root == nullptr) {
+        return nullptr;
+    }
+
+    // Recursively process left and right subtrees
+    root->left = RemoveHalfNodes(root->left);
+    root->right = RemoveHalfNodes(root->right);
+
+    // If this node is a half node with only one child, return that child
+    if (root->left == nullptr && root->right != nullptr) {
+        Node* newRoot = root->right;
+        delete root;
+        return newRoot;
+    }
+    if (root->right == nullptr && root->left != nullptr) {
+        Node* newRoot = root->left;
+        delete root;
+        return newRoot;
+    }
+
+    // If this node is a full node or a leaf, return it
+    return root;
+}
+    
+};
