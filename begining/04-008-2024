@@ -1,0 +1,24 @@
+n {
+  public:
+    // Function to find the maximum number of meetings that can
+    // be performed in a meeting room.
+    static bool compare(pair<int,int>&a,pair<int,int>&b){
+        return a.second < b.second;
+    }
+    int maxMeetings(int n, int start[], int end[]) {
+        vector<pair<int,int>>vec;
+        for(int i=0;i<n;i++){
+            vec.push_back({start[i],end[i]});
+        }
+        sort(vec.begin(),vec.end(),compare);
+        int count = 0;
+        int endTime = -1;
+        for(auto i : vec){
+            if(i.first > endTime){
+                endTime = i.second;
+                count++;
+            }
+        }
+        return count;
+    }
+};
