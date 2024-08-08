@@ -1,0 +1,23 @@
+class Solution {
+  public:
+    int sumTree(Node* node, bool &isSumTree) {
+        if (!node) return 0;
+        if (!node->left && !node->right) return node->data; 
+        
+        int leftSum = sumTree(node->left, isSumTree);
+        int rightSum = sumTree(node->right, isSumTree);
+
+        if (node->data != leftSum + rightSum) {
+            isSumTree = false;
+        }
+
+        return node->data + leftSum + rightSum;
+    }
+    
+    bool isSumTree(Node* root) {
+        // Your code here
+        bool isSumTree = true;
+        sumTree(root, isSumTree);
+        return isSumTree;
+    }
+};
