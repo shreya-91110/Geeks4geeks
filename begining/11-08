@@ -1,0 +1,32 @@
+class Solution 
+{
+    public:
+    //Function to find the maximum profit and the number of jobs done.
+    vector<int> JobScheduling(Job arr[], int n) 
+    { 
+        vector<vector<int>> deadline(n+1);
+        for(int i=0;i<n;i++){
+            deadline[arr[i].dead].push_back({arr[i].profit});
+        }
+        for(int i=1;i<=n;i++){
+            // we will take top i jobs from the deadline[i] with maximum profit
+            sort(deadline[i].begin(),deadline[i].end(),greater<int>());
+        }
+        // to ensure the multiple max profit are considered 
+        multiset<int>cont;
+        for(int i=1;i<=n;i++){
+            // always ensure that we have i job with max profit ...
+            for(int j=0;j<i && j < deadline[i].size();j++){
+                cont.insert(deadline[i][j]);
+            }
+            while( cont.size() > i ){
+                cont.erase(cont.begin());
+            }
+        }
+        int ans=0;
+        for(auto profit : cont){
+            ans+=(profit);
+        }
+        return {cont.size(),ans};
+    } 
+};
