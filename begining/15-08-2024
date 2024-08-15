@@ -1,0 +1,35 @@
+class Solution {
+  public:
+   void f(Node*head,int&carry){
+    
+    if(head->next==NULL){
+        int temp=head->data+1;
+        head->data=(head->data+1)%10;
+        carry=(temp/10);
+        return;
+    }
+    
+    f(head->next,carry);
+    int curr=head->data;
+   if(carry > 0){
+     head->data=(head->data+carry)%10;
+     carry=(curr+carry)/10;
+       
+   }
+    return;
+       
+   }
+   
+    Node* addOne(Node* head) {
+    int carry=0;
+      f(head,carry);
+      if(carry){
+        
+        Node *temp =new Node(carry);
+        temp->next=head;
+        return temp;
+          
+      }
+     return head;
+    }
+};
