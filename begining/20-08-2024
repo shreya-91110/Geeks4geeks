@@ -1,0 +1,62 @@
+class Solution {
+    
+    
+    void tra(Node* root, unordered_map<Node*,Node*> &mpp,int target, Node* &t){
+    
+        if(!root) return;
+    
+        if(root->data==target) t = root;
+        
+        if(root->left){
+            tra(root->left,mpp,target,t);
+            mpp[root->left] = root;
+        }
+        if(root->right){
+            tra(root->right,mpp,target,t);
+            mpp[root->right] = root;
+        }
+        
+    }
+    
+  public:
+    int minTime(Node* root, int target) 
+    {
+        unordered_map<Node*,Node*> mpp;
+        Node* t;
+        tra(root,mpp,target,t);
+        
+        queue<Node*> q;
+        unordered_set<Node*> vis;
+        
+        int cnt = 0;
+        q.push(t);
+        
+        while(q.size()){
+            
+            int n = q.size();
+            
+            while(n--){
+                
+                auto node = q.front(); q.pop();
+                vis.insert(node);
+                
+                if(node->left&&!vis.count(node->left)){
+                    
+                    q.push(node->left);
+                }
+                if(node->right&&!vis.count(node->right)){
+                    q.push(node->right);
+                    
+                }
+                
+                if(mpp.count(node)&&!vis.count(mpp[node])){
+                    q.push(mpp[node]);
+                }
+            }
+            
+            cnt++;
+        }
+        
+        return cnt>1?cnt-1:0;
+    }
+};
