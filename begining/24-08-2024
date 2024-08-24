@@ -1,0 +1,19 @@
+class Solution {
+  public:
+    // Function to return max value that can be put in knapsack of capacity W.
+    int dp[1001][1001];
+    int f(int W, vector<int>& wt, vector<int>& val, int ind){
+        if(ind==wt.size()){
+            return 0;
+        }
+        if(dp[ind][W]!=-1) return dp[ind][W];
+        int notpick = f(W,wt,val,ind+1);
+        int pick=0;
+        if(W>=wt[ind]) pick = val[ind] + f(W-wt[ind],wt,val,ind+1);
+        return dp[ind][W]=max(pick,notpick);
+    }
+    int knapSack(int W, vector<int>& wt, vector<int>& val) {
+        memset(dp,-1,sizeof(dp));
+        return f(W,wt,val,0);
+    }
+};
