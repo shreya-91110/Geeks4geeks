@@ -1,0 +1,36 @@
+class Solution {
+  public:
+    Node* bToDLL(Node* root) {
+        // code here
+         // Base case: if the root is null, return null
+        if (!root) return nullptr;
+
+        // Recursively convert the right subtree to DLL and store the head of the right subtree
+        Node* rightSubtree = bToDLL(root->right);
+
+        // If the right subtree exists, link its leftmost node to the root
+        if (rightSubtree) rightSubtree->left = root;
+
+        // Link the root to the right subtree (or null if there is no right subtree)
+        root->right = rightSubtree;
+
+        // Recursively convert the left subtree to DLL and store the head of the left subtree
+        Node* leftSubtree = bToDLL(root->left);
+
+        // Traverse to the rightmost node of the left subtree (if it exists)
+        auto temp = leftSubtree;
+        while (temp && temp->right) temp = temp->right;
+
+        // Link the rightmost node of the left subtree to the root
+        root->left = temp;
+
+        // If the left subtree exists, link its rightmost node to the root
+        if (temp) temp->right = root;
+
+        // If the left subtree does not exist, return the root as it is the new head of the DLL
+        if (!temp) return root;
+
+        // Return the head of the DLL, which is the leftmost node of the left subtree
+        return leftSubtree;
+    }
+};
