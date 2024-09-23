@@ -1,0 +1,52 @@
+class Solution {
+public:
+    vector<int> findTwoElement(vector<int> arr) {
+        int n = arr.size();
+        
+        int Xor = 0;
+        // Step 1: Get XOR of all elements and numbers from 1 to n
+        for(int i = 0; i < n; i++){
+            Xor = Xor ^ arr[i];     // XOR of array elements
+            Xor = Xor ^ (i + 1);    // XOR of 1 to n
+        }
+        
+        // Step 2: Find rightmost set bit in the XOR result
+        int bitNum = 0;
+        while((Xor & (1 << bitNum)) == 0) {
+            bitNum++;
+        }
+        
+        // Step 3: Divide numbers into two groups based on the set bit
+        int zero = 0, one = 0;
+        for(int i = 0; i < n; i++){
+            // Group numbers based on the set bit in bitNum position
+            if(arr[i] & (1 << bitNum)) {
+                one = one ^ arr[i];  // XOR for "one" group (numbers where bitNum is set)
+            } else {
+                zero = zero ^ arr[i];  // XOR for "zero" group (numbers where bitNum is not set)
+            }
+            
+            if((i + 1) & (1 << bitNum)) {
+                one = one ^ (i + 1);  // XOR for numbers 1 to n in "one" group
+            } else {
+                zero = zero ^ (i + 1);  // XOR for numbers 1 to n in "zero" group
+            }
+        }
+        
+        // Step 4: Determine which is the missing and which is the repeating number
+        int cnt = 0;
+        for(auto i: arr){
+            if(i == zero){
+                cnt++;  // Check the count of the number "zero" in the array
+            }
+        }
+        
+        // If "zero" is the repeating number, return {zero, one}, else return {one, zero}
+        if(cnt == 2){
+            return {zero, one};  // zero is repeating, one is missing
+        }
+        
+        return {one, zero};  // one is repeating, zero is missing
+    }
+};
+
