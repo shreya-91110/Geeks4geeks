@@ -1,0 +1,14 @@
+class Solution {
+  public:
+    long long findSmallest(vector<int> &arr) {
+        // Your code goes here.
+        long long sum = 1;
+        
+        for(auto it:arr){
+            if(sum < it)return sum;
+            sum += it;
+        }
+        
+        return sum;
+    }
+};
