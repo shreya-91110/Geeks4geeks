@@ -1,0 +1,21 @@
+struct Node *insert(struct Node *head, int data) {
+    // Code here
+    struct Node* temp=new Node(data);
+    if(head==NULL)return temp;
+    temp->npx=head;
+    
+    return temp;
+    
+}
+
+vector<int> getList(struct Node *head) {
+    // Code here
+    vector<int> ans;
+    while(head!=NULL){
+        ans.push_back(head->data);
+        head=head->npx;
+    }
+    
+    // reverse(ans.begin(),ans.end());
+    return ans;
+}
