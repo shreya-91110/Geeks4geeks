@@ -1,0 +1,29 @@
+class Solution {
+  public:
+    int maxDistance(vector<int> &arr) {
+        // Code here
+        unordered_map<int,vector<int>>mp;
+        
+        for(int i=0;i<arr.size();i++)
+        {
+            mp[arr[i]].push_back(i);
+        }
+        
+        int maxi = 0;
+        
+        for(auto &pair : mp)
+        {
+            const auto& indices = pair.second;
+           
+            if(indices.size()>1){
+                int first = indices[0];
+                int last = indices.back();
+                
+                maxi = max(maxi , last-first);
+            }
+                
+        }
+        
+        return maxi;
+    }
+};
