@@ -1,0 +1,23 @@
+class Solution {
+  public:
+    vector<int> rearrange(const vector<int>& arr) {
+        // Code here
+        
+        vector<int>temp(arr.size(),-1);
+        
+        for(int i=0;i<arr.size();i++){
+            
+            
+           
+             
+            if(arr[i]>=0 && arr[i]<arr.size()){
+                 temp[arr[i]]=arr[i];
+            }
+               
+            
+        }
+        
+        
+        return temp;
+    }
+};
