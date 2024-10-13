@@ -1,0 +1,13 @@
+class Solution {
+  public:
+    void deleteAlt(struct Node *head) {
+        // Code here
+         Node* tmp=head;
+        
+        while(tmp and tmp->next)
+        {             
+            tmp->next= tmp->next->next;
+            tmp= tmp->next?tmp->next:NULL;
+        }
+    }
+};
