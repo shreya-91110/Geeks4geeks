@@ -1,0 +1,16 @@
+class Solution {
+  public:
+    // Function to count the number of subarrays which adds to the given sum.
+    int subArraySum(vector<int>& arr, int tar) {
+        int cnt=0;
+        unordered_map<int,int>mp;
+        int sum=0;
+        mp[0]=1;
+        for(int &num:arr){
+            sum+= num;
+            if(mp.find(sum-tar)!=mp.end()){
+                cnt += mp[sum-tar];
+            }mp[sum]++;
+        }return cnt;
+    }
+};
