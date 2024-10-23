@@ -1,0 +1,24 @@
+class Solution {
+  public:
+  
+   int sumOfLastN_Nodes(struct Node* head, int n) {
+        Node * slow = head;
+        Node * fast = head;
+        long long sumFast = 0, sumSlow = 0;
+        for(int i=0;i<n;i++)
+        {
+            sumFast += fast->data;
+            fast = fast->next;
+            if(!fast)
+            return sumFast;
+        }
+        while(fast)
+        {
+            sumFast += fast->data;
+            fast = fast->next;
+            sumSlow += slow->data;
+            slow = slow->next;
+        }
+        return (int)sumFast-sumSlow;
+    }
+};
