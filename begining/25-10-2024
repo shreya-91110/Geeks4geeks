@@ -1,0 +1,25 @@
+class Solution {
+
+  public:
+    vector<int> alternateSort(vector<int>& arr) {
+        sort(arr.begin(),arr.end());
+        
+        //Creating an array for storing the answer
+        vector<int> ans;
+        
+        int  n = arr.size();
+        int s = 0;
+       
+        int e = n - 1;
+        while(s <= e)
+        {
+            ans.push_back(arr[e--]); // Stores the Largest element accordingly
+            ans.push_back(arr[s++]); // Stores the smallest element accordingly 
+        }
+        
+        if(n%2 != 0)
+            ans.pop_back(); // 
+            
+        return ans;
+    }
+};
