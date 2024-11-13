@@ -1,0 +1,19 @@
+class Solution {
+  public:
+    // Function to find intersection point in Y shaped Linked Lists.
+    int intersectPoint(Node* head1, Node* head2) {
+        // Your Code Here
+        unordered_map<Node*,int>map;
+        while(head1!=NULL){
+            map[head1]++;
+            head1=head1->next;
+        }
+        while(head2!=NULL){
+            if(map.count(head2)>0){
+                return head2->data;
+            }
+            head2=head2->next;
+        }
+        return -1;
+    }
+};
