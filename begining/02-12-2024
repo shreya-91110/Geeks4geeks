@@ -1,0 +1,53 @@
+class Solution {
+public:
+    void kmp(string &pat, string &txt, vector<int> &lps, vector<int> &ans) {
+        int n = txt.size();
+        int m = pat.size();
+
+        int i = 0, j = 0;
+        while (i < n) {
+            // match
+            if (txt[i] == pat[j]) {
+                i++;
+                j++;
+            }
+            // not match
+            else {
+                if (j == 0) 
+                    i++;
+                else 
+                    j = lps[j - 1];
+            }
+
+            if (j == m) {
+                ans.push_back(i - m);
+                j = lps[j - 1];
+            }
+        }
+    }
+
+    vector<int> search(string &pat, string &txt) {
+        int n = pat.size();
+        int m = txt.size();
+
+        vector<int> lps(n, 0);
+        int i = 0, j = 1;
+
+        while (j < n) {
+            if (pat[i] == pat[j]) {
+                lps[j] = i + 1;
+                i++;
+                j++;
+            } else {
+                if (i == 0)
+                    j++;
+                else
+                    i = lps[i - 1];
+            }
+        }
+
+        vector<int> ans;
+        kmp(pat, txt, lps, ans);
+        return ans;
+    }
+};
